@@ -1,5 +1,6 @@
 package com.tekkom.footballlite.adapter;
 
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -15,53 +16,61 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.request.RequestOptions;
 import com.tekkom.footballlite.DetailActivity;
+import com.tekkom.footballlite.FavDB;
+import com.tekkom.footballlite.FavoriteActivity;
 import com.tekkom.footballlite.R;
+import com.tekkom.footballlite.data.Favorite;
 import com.tekkom.footballlite.data.Team;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
-    private Team team;
-    private Context context;
+public class FavoriteAdapter extends RecyclerView.Adapter<FavoriteAdapter.ViewHolder> {
+    private Activity activity;
+    private FavDB favDB;
+    private ArrayList<Team> team = new ArrayList<>();
+    private ArrayList<Favorite> favoriteArrayList = new ArrayList<>();
 
-    private List<Team> teams = new ArrayList<>();
+    public FavoriteAdapter(Activity activity) {
+        this.activity = activity;
+        favDB = new FavDB(activity);
+    }
 
-    public void setData(List<Team> teams) {
-        this.context = context;
-        this.teams.clear();
-        this.teams = teams;
+    public ArrayList<Favorite> getFavoriteArrayList() {
+        return favoriteArrayList;
+    }
+
+    public void setFavoriteArrayList(ArrayList<Favorite> list) {
+        if (list.size() > 0) {
+            this.favoriteArrayList.clear();
+            this.favoriteArrayList = favoriteArrayList;
+        }
+
+        this.favoriteArrayList.addAll(list);
         notifyDataSetChanged();
     }
 
     @NonNull
     @Override
-    public TeamAdapter.ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent,int viewType) {
         View view = LayoutInflater
                 .from(parent.getContext())
                 .inflate(R.layout.item_list, parent, false);
         return new ViewHolder(view);
     }
 
-    private void createTableOnFirstStart() {
-        SharedPreferences prefs = context.getSharedPreferences("prefs", Context.MODE_PRIVATE);
-        SharedPreferences.Editor editor =prefs.edit();
-        editor.putBoolean("firstStart", false);
-        editor.apply();
-    }
-
     @Override
-    public void onBindViewHolder(@NonNull TeamAdapter.ViewHolder holder, int position) {
-        holder.bind(teams.get(position));
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+        holder.bind(favoriteArrayList.get(position));
         holder.itemView.setOnClickListener(view -> {
-            Intent intent = new Intent(view.getContext(), DetailActivity.class);
-            intent.putExtra("detail", teams.get(position));
+            Intent intent = new Intent(view.getContext(), FavoriteActivity.class);
+            intent.putExtra("detail", favoriteArrayList.get(position));
             view.getContext().startActivity(intent);
         });
     }
 
     @Override
-    public int getItemCount() { return teams.size(); }
+    public int getItemCount() { return favoriteArrayList.size(); }
 
     public class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView img_photo;
@@ -75,10 +84,10 @@ public class TeamAdapter extends RecyclerView.Adapter<TeamAdapter.ViewHolder> {
             tv_desc = itemView.findViewById(R.id.tv_desc);
         }
 
-        public void bind(Team team) {
-            tv_name.setText(team.getStrTeam());
+        public void bind(Favorite favoriteArrayList) {
+            tv_name.setText(favoriteArrayList.getStrTeam());
             Glide.with(itemView.getContext())
-                    .load(team.getStrTeamBadge())
+                    .load(favoriteArrayList.getStrTeamBadge())
                     .apply(new RequestOptions())
                     .into(img_photo);
         }

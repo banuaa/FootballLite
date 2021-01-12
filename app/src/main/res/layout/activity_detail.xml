@@ -23,6 +23,16 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:srcCompat="@tools:sample/avatars"/>
+        <com.github.ivbaranov.mfb.MaterialFavoriteButton
+            android:id="@+id/fav"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="20dp"
+            android:tint="#ff0000"
+            app:mfb_type="heart"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/img_photo" />
         <TextView
             android:id="@+id/tv_name"
             android:layout_width="wrap_content"
@@ -32,19 +42,8 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/img_photo"
+            app:layout_constraintTop_toBottomOf="@+id/fav"
             android:text="Name"/>
-        <TextView
-            android:id="@+id/tv_id"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:textSize="18sp"
-            android:textStyle="bold"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_name"
-            android:text="Id"/>
         <TextView
             android:id="@+id/tv_stadium"
             android:layout_width="wrap_content"
@@ -54,7 +53,7 @@
             android:textStyle="bold"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tv_id"
+            app:layout_constraintTop_toBottomOf="@+id/tv_name"
             android:text="Stadium"/>
         <TextView
             android:id="@+id/tv_desc"

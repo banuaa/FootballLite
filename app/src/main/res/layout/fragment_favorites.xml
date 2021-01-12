@@ -3,10 +3,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.TeamsFragment">
+    tools:context=".ui.FavoritesFragment">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/rvTeams"
+        android:id="@+id/rvTeamsFav"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="30dp"
@@ -16,7 +16,7 @@
         android:id="@+id/liga"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="English Premier League"
+        android:text="Favorites Teams"
         android:textSize="18sp"
         android:textStyle="bold"
         android:textColor="@color/white"
